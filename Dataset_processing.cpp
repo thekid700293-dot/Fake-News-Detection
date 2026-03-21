@@ -14,7 +14,7 @@ namespace fs = std::filesystem;
 using json = nlohmann::json;
 using namespace std;
 
-// --- BFS GIỮ NGUYÊN BỘ KHUNG ---
+// BFS
 void calculateBFS(const json& node, int currentDepth, int& maxDepth, int& totalNodes) {
     totalNodes++;
     maxDepth = max(maxDepth, currentDepth);
@@ -25,14 +25,14 @@ void calculateBFS(const json& node, int currentDepth, int& maxDepth, int& totalN
     }
 }
 
-// --- MEGA HEURISTIC: MỞ RỘNG TỐI ĐA (HÀNG TRĂM DẤU HIỆU) ---
+// HEURISTIC
 double getAdvancedScore(const string& text) {
     if (text.empty()) return 0;
     double score = 0;
     string low = text;
     transform(low.begin(), low.end(), low.begin(), ::tolower);
 
-    // Danh sách từ khóa đa tầng tâm lý
+    // List of keywords with associated weights
     vector<pair<vector<string>, double>> megaDict = {
         {{"breaking", "urgent", "emergency", "alert", "shocking", "bombshell", "critical", "happening", "just in", "panic", "terror", "immediate", "warning", "deadly", "chaos", "drastic", "flare up", "explosion"}, 6.5},
         {{"exposed", "truth", "hidden", "conspiracy", "leaked", "blackout", "forbidden", "censored", "secret", "coverup", "scandal", "fraud", "mystery", "insider", "anonymous", "agenda", "classified", "prophecy", "prediction"}, 8.0},
@@ -71,13 +71,13 @@ string smartFormat(string t, size_t width) {
     t.erase(remove_if(t.begin(), t.end(), [](char c){ return c=='\n'||c=='\r'||c=='\t'||c=='|'; }), t.end());
 
     if (t.length() > width) {
-        // Cắt ở vị trí width - 4 để chừa chỗ cho "..."
+        
         size_t cutPos = width - 4;
         
-        // LOGIC CHỐNG CẮT NỬA TỪ: Tìm khoảng trắng gần nhất phía trước vị trí cắt
+        
         size_t lastSpace = t.find_last_of(" ", cutPos);
         
-        // Nếu tìm thấy khoảng trắng hợp lý (không quá xa đầu dòng)
+       
         if (lastSpace != string::npos && lastSpace > width / 2) {
             t = t.substr(0, lastSpace) + "...";
         } else {
@@ -85,7 +85,7 @@ string smartFormat(string t, size_t width) {
         }
     }
     
-    // Fix Padding tuyệt đối để cột luôn thẳng
+    
     if (t.length() < width) t.append(width - t.length(), ' ');
     return t;
 }
