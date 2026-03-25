@@ -64,7 +64,7 @@ double getAdvancedScore(const string& text) {
     return score + (double)text.length() / 40.0;
 }
 
-// --- HÀM FORMAT THÔNG MINH: CHỐNG CẮT NỬA TỪ ---
+// --- Format file ---
 string smartFormat(string t, size_t width) {
     t = regex_replace(t, regex("http\\S+"), ""); // Xóa URL
     t = regex_replace(t, regex("[^\\x20-\\x7E]"), ""); // Chỉ giữ ký tự ASCII sạch
